@@ -37,7 +37,7 @@ use crate::{
         )
     ),
     tags(
-        (name = "auth-crypto-service", description = "Authentication and Cryptography Service")
+        (name = "keys", description = "Authentication and Cryptography Service")
     )
 )]
 pub struct ApiDoc;
