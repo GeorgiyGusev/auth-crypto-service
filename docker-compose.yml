@@ -23,7 +23,7 @@ services:
       - "traefik.http.routers.auth-crypto-service.rule=Host(`api.kontora-dev.ru`) && PathPrefix(`/auth-crypto-service/api/v1`)"
       - "traefik.http.routers.auth-crypto-service.entrypoints=websecure"
       - "traefik.http.routers.auth-crypto-service.tls.certresolver=myresolver"
-      - "traefik.http.services.auth-crypto-service.loadbalancer.server.port=8000"
+      - "traefik.http.services.auth-crypto-service.loadbalancer.server.port=3000"
       - "traefik.http.routers.auth-crypto-service.service=auth-crypto-service"
       - "traefik.docker.network=global"
     depends_on:
