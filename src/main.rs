@@ -4,9 +4,7 @@ use axum::Router;
 use dotenvy::dotenv;
 use tokio::net::TcpListener;
 use tokio::signal;
-use tower_http::cors::{Any, CorsLayer};
-use tower_http::timeout::TimeoutLayer;
-use tower_http::trace::TraceLayer;
+use tower_http::{cors::CorsLayer, timeout::TimeoutLayer, trace::TraceLayer};
 use tracing_subscriber::util::SubscriberInitExt;
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
@@ -40,18 +38,15 @@ async fn main() {
         .await
         .expect("failed to initialize keys router");
 
+    let cors = CorsLayer::permissive();
+
     let app = Router::new()
         .nest("/auth-crypto-service/api/v1", keys_router)
         .merge(SwaggerUi::new("/auth-crypto-service/api/v1/docs").url(
             "/auth-crypto-service/api/v1/api-docs/openapi.json",
             ApiDoc::openapi(),
         ))
-        .layer(
-            CorsLayer::new()
-                .allow_headers(Any)
-                .allow_methods(Any)
-                .allow_origin(Any),
-        )
+        .layer(cors)
         .layer(TimeoutLayer::new(Duration::from_secs(10)))
         .layer(TraceLayer::new_for_http());
 
@@ -61,7 +56,10 @@ async fn main() {
         .unwrap_or_else(|_| panic!("Failed to bind to address {}", addr));
 
     tracing::info!("Server listening on {}", addr);
-    tracing::info!("Swagger UI available at http://{}/docs", addr);
+    tracing::info!(
+        "Swagger UI available at http://{}/auth-crypto-service/api/v1/docs",
+        addr
+    );
 
     axum::serve(listener, app)
         .with_graceful_shutdown(shutdown_signal())
