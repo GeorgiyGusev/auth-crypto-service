@@ -52,7 +52,7 @@ struct KeysState {
 // JWKS endpoint
 #[utoipa::path(
     get,
-    path = "/.well-known/jwks.json",
+    path = "/auth-crypto-service/api/v1/.well-known/jwks.json",
     tag = "keys",
     responses(
         (status = 200, description = "JWKS retrieved successfully", body = JwksResponse),
@@ -67,7 +67,7 @@ async fn jwks(State(state): State<Arc<KeysState>>) -> JsonResponse<JwksResponse>
 // Sign JWT token
 #[utoipa::path(
     post,
-    path = "/sign/jwt",
+    path = "/auth-crypto-service/api/v1/sign/jwt",
     tag = "keys",
     request_body = CreateJwtRequest,
     responses(
@@ -94,7 +94,7 @@ async fn sign_jwt_token(
 // Refresh keys
 #[utoipa::path(
     post,
-    path = "/refresh/keys",
+    path = "/auth-crypto-service/api/v1/refresh/keys",
     tag = "keys",
     responses(
         (status = 200, description = "Keys refreshed successfully", body = RefreshKeysResponse),

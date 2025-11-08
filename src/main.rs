@@ -40,8 +40,11 @@ async fn main() {
         .expect("failed to initialize keys router");
 
     let app = Router::new()
-        .merge(keys_router)
-        .merge(SwaggerUi::new("/docs").url("/api-docs/openapi.json", ApiDoc::openapi()))
+        .nest("/auth-crypto-service/api/v1", keys_router)
+        .merge(SwaggerUi::new("/auth-crypto-service/api/v1/docs").url(
+            "/auth-crypto-service/api/v1/api-docs/openapi.json",
+            ApiDoc::openapi(),
+        ))
         .layer(TimeoutLayer::new(Duration::from_secs(10)))
         .layer(TraceLayer::new_for_http());
 

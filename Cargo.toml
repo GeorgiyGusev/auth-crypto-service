@@ -3,6 +3,11 @@ name = "auth-crypto-service"
 version = "0.1.0"
 edition = "2024"
 
+
+[[bin]]
+name = "app"
+path = "src/main.rs"
+
 [dependencies]
 anyhow = "1.0.100"
 async-trait = "0.1.89"
