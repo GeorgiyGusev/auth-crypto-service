@@ -13,8 +13,6 @@ services:
       - "traefik.http.services.auth-crypto-service.loadbalancer.server.port=3000"
       - "traefik.http.routers.auth-crypto-service.service=auth-crypto-service"
       - "traefik.docker.network=global"
-    depends_on:
-      - vault
     restart: unless-stopped
     networks:
       - auth-crypto-network
