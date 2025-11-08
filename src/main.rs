@@ -4,6 +4,7 @@ use axum::Router;
 use dotenvy::dotenv;
 use tokio::net::TcpListener;
 use tokio::signal;
+use tower_http::cors::{Any, CorsLayer};
 use tower_http::timeout::TimeoutLayer;
 use tower_http::trace::TraceLayer;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -45,6 +46,12 @@ async fn main() {
             "/auth-crypto-service/api/v1/api-docs/openapi.json",
             ApiDoc::openapi(),
         ))
+        .layer(
+            CorsLayer::new()
+                .allow_headers(Any)
+                .allow_methods(Any)
+                .allow_origin(Any),
+        )
         .layer(TimeoutLayer::new(Duration::from_secs(10)))
         .layer(TraceLayer::new_for_http());
 
