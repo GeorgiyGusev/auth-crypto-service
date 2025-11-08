@@ -17,7 +17,7 @@ services:
       - vault
     restart: unless-stopped
     networks:
-      - local
+      - auth-crypto-network
       - global
 
 networks:
