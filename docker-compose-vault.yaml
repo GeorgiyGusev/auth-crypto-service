@@ -1,22 +1,29 @@
-serivces:
+version: "3.9"
+
+services:
   vault:
     image: hashicorp/vault:latest
     container_name: vault
+    restart: unless-stopped
     ports:
       - "8200:8200"
     environment:
-      VAULT_ADDR: "http://0.0.0.0:8200"
-      VAULT_API_ADDR: "http://0.0.0.0:8200"
+      VAULT_ADDR: "http://vault:8200"
+      VAULT_API_ADDR: "http://vault:8200"
       VAULT_CLUSTER_ADDR: "https://vault:8201"
-    volumes:
-      - vault_data:/vault/file
-      - ./vault-config.hcl:/vault/config/vault-config.hcl
+      VAULT_LOG_LEVEL: "debug"
     cap_add:
       - IPC_LOCK
-    command: server -config=/vault/config/vault-config.hcl
+    volumes:
+      - vault_data:/vault/file
+      - ./vault-config:/vault/config
+    command: vault server -config=/vault/config/vault-config.hcl
     networks:
       - auth-crypto-network
 
 networks:
   auth-crypto-network:
     external: true
+
+volumes:
+  vault_data:
