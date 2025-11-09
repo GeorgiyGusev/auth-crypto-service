@@ -26,8 +26,6 @@ vaultrs = "0.7.4"
 rand_core = "0.6"
 tracing-bunyan-formatter = "0.3.10"
 tracing-log = "0.2.0"
-utoipa = { version = "5.4.0", features = ["axum_extras"] }
-utoipa-swagger-ui = { version = "9.0.2", features = ["axum"] }
 tower = "0.5.2"
 mockall = "0.13.1"
 

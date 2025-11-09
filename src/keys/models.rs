@@ -26,8 +26,7 @@ pub struct SignJwtTokenResponse {
     pub token: String,
 }
 
-#[derive(Debug, Deserialize, utoipa::ToSchema)]
+#[derive(Debug, Deserialize)]
 pub struct CreateJwtRequest {
-    #[schema(value_type = Object)]
     pub payload: serde_json::Value,
 }
